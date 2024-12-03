@@ -43,3 +43,43 @@ optimization_fn <- function(X, y) {
 
 
 ## work here
+
+predicted_probs<-1/1+exp(-design %*% beta_optimized)
+predictions<- ifelse(predicted_probs>0.5,1,0)
+confusion_matrix<-table(Predicted=predicted_probs, Actual=y)
+print(confusion_matrix)
+
+
+#rename to make it easier
+true_pos<-confusion_matrix[1,1]
+false_pos<-confusion_matrix[1,2]
+false_neg<-confusion_matrix[2,1]
+true_neg<-confusion_matrix[2,2]
+
+#Prevalence
+prevalence <- (true_pos+false_neg)/sum(confusion_matrix)
+print(prevalence)
+
+#Accuracy
+accuracy <- (true_pos+true_neg)/sum(confusion_matrix)
+print(accuracy)
+
+#Sensitivity
+sensitivity<-true_pos/(true_pos+false_neg)
+print(sensitivity)
+
+#Specificity
+specificity <- true_neg/(true_neg+false_pos)
+print(specificity)
+
+#False Discovery Rate
+false_discovery_rate <- false_pos/(true_pos+false_pos)
+print(false_discovery_rate)
+
+#Diagnostic Odds Ratio
+diagnostic_odds_ratio<-(true_pos+true_neg)/(false_pos+false_neg)
+print(diagnostic_odds_ratio)
+
+
+
+
