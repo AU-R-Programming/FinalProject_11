@@ -22,14 +22,17 @@ get_initial_beta <- function(X, y) {
 optimization_fn <- function(X, y) {
   
   n <- nrow(X)
-  X <- cbind(rep(1, n), X)
-  initial_beta <- get_initial_beta(X, y)
+  # add intercept to data
+  # TODO Replace with model.matrix()
+  design <- model.matrix(~., X)
+  initial_beta <- get_initial_beta(design, y)
   
   result <- optim(par = initial_beta, fn = loss_fn)
   
   beta_hat <- result$par
   return(beta_hat)
 }
+
 
 ## work here
 
