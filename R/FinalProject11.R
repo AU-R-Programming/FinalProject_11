@@ -1,9 +1,26 @@
 ## work here
 
+
+#' @title Predict Probabilities for Logistic Regression
+#'
+#' @description Computes predicted probabilities for a logistic regression model
+#' given a set of regression coefficients and predictors.
+#'
+#' @param beta A \code{vector} of regression coefficients, including the intercept.
+#' @param X A \code{matrix} or \code{data.frame} of predictors. Each column represents
+#' a predictor, and rows correspond to observations.
+#'
+#' @return A \code{vector} of predicted probabilities for each observation. The values represent
+#' the estimated probability of the positive class (class 1).
+#' @export
 get_predicted_prob <- function(beta, X) {
   p <- 1 / (1 + exp(-X %*% beta))
   return(p)
 }
+
+
+
+
 
 # X being a matrix of predictors where each row is an observation
 # y being a n x 1 column of responses where each row contains a response
@@ -19,6 +36,24 @@ get_initial_beta <- function(X, y) {
   solve(t(X) %*% X) %*% t(X) %*% y
 }
 
+
+
+
+
+#' @title Fit Logistic Regression Model
+#'
+#' @description Estimates the coefficients of a logistic regression model using numerical optimization.
+#' This function minimizes the negative log-likelihood of the logistic regression model.
+#'
+#' @param X A \code{matrix} or \code{data.frame} of predictors. Each column represents
+#' a predictor, and rows correspond to observations.
+#' @param y A \code{vector} of binary response values corresponding to the observations in \code{X}.
+#' The values should be either 0 (negative class) or 1 (positive class).
+#'
+#' @return A \code{vector} containing the estimated regression coefficients (including the intercept).
+#'
+#' @importFrom stats optim
+#' @export
 optimization_fn <- function(X, y) {
 
   n <- nrow(X)
@@ -139,7 +174,6 @@ bootstrapCI <- function(X, y, alpha = 0.05, B = 20) {
 #'   \item{Diagnostic_Odds_Ratio}{The odds ratio of the diagnostic test, calculated as (TP * TN) / (FP * FN).}
 #' }
 #'
-#' @importFrom stats table
 #' @export
 compute_metrics <- function(predicted_probs, y, cutoff = 0.5) {
   # Convert predicted probabilities to predicted class labels using the cutoff

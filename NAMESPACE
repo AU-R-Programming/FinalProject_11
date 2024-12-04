@@ -2,4 +2,7 @@
 
 export(bootstrapCI)
 export(compute_metrics)
+export(get_predicted_prob)
+export(optimization_fn)
+importFrom(stats,optim)
 importFrom(stats,quantile)
