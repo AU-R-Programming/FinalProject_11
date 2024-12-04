@@ -35,8 +35,12 @@ optimization_fn <- function(X, y) {
 
 
 ## work here
-library(roxygen2)
-roxygenize()
+# library(roxygen2)
+# library(devtools)
+# setwd("~/OneDrive/Documents/GitHub/FinalProject11")
+
+# devtools::document()
+# ?bootstrapCI
 
 
 #' @title Bootstrap Confidence Intervals
