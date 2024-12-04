@@ -1,0 +1,22 @@
+---
+title: "Vignette"
+output: html_document
+date: "2024-12-04"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#Section 1
+
+## Heading
+
+
+
+# Section 2
+
+
+
+#Section 3
+
+
