@@ -35,10 +35,33 @@ optimization_fn <- function(X, y) {
 
 
 ## work here
+library(roxygen2)
+roxygenize()
 
 
-
-
+#' @title Bootstrap Confidence Intervals
+#'
+#' @description Computes bootstrap confidence intervals for regression coefficients
+#' using resampling with replacement.
+#'
+#' @param X A \code{matrix} or \code{data.frame} of predictors. Each column represents
+#' a predictor, and rows correspond to observations.
+#' @param y A \code{vector} of response values corresponding to the observations in \code{X}.
+#' @param alpha A \code{numeric} value indicating the significance level for the confidence
+#' intervals. The default alpha is 0.05.
+#' @param B A \code{numeric} indicating the number of bootstrap resamples to
+#' perform. The default number of bootstrap resamples is 20.
+#'
+#' @return A \code{matrix} containing the bootstrap confidence intervals for each regression
+#' coefficient. Each row corresponds to a coefficient (including the intercept), and the
+#' columns represent the lower and upper bounds of the confidence interval.
+#' \describe{
+#'      \item{Lower Bound}{The lower bound of the confidence interval for each coefficient.}
+#'      \item{Upper Bound}{The upper bound of the confidence interval for each coefficient.}
+#' }
+#'
+#' @importFrom stats quantile
+#' @export
 bootstrapCI <- function(X, y, alpha = 0.05, B = 20) {
   n <- nrow(X)  # Number of observations
   X <- cbind(1, X)  # Add intercept column
@@ -86,6 +109,34 @@ bootstrapCI <- function(X, y, alpha = 0.05, B = 20) {
 
 
 ## work here
+
+#' @title Compute Model Evaluation Metrics
+#'
+#' @description Computes various performance metrics to evaluate a binary classification model.
+#' The function calculates metrics such as accuracy, sensitivity, specificity, and more,
+#' based on predicted probabilities and the actual response values.
+#'
+#' @param predicted_probs A \code{numeric} vector of predicted probabilities from the model.
+#' @param y A \code{numeric} or \code{factor} vector of actual response values corresponding to the observations.
+#' The values should be either 0 (negative class) or 1 (positive class)..
+#' @param cutoff A \code{numeric} value indicating the threshold for classifying predictions as class 1.
+#' The default cutoff is 0.5, meaning any predicted probability greater than 0.5 will be classified as 1.
+#'
+#' @return A \code{list} containing the following performance metrics:
+#' \describe{
+#'   \item{Confusion_Matrix}{A \code{2x2} matrix showing the confusion matrix for the model,
+#'   with the predicted and actual values. It contains counts for true positives (TP), false positives (FP),
+#'   true negatives (TN), and false negatives (FN).}
+#'   \item{Prevalence}{The proportion of actual positives in the dataset.}
+#'   \item{Accuracy}{The proportion of correct predictions (TP + TN) out of all predictions.}
+#'   \item{Sensitivity}{The True Positive Rate (TPR), i.e., the proportion of actual positives correctly identified.}
+#'   \item{Specificity}{The True Negative Rate (TNR), i.e., the proportion of actual negatives correctly identified.}
+#'   \item{False_Discovery_Rate}{The proportion of false positives (FP) among all positive predictions.}
+#'   \item{Diagnostic_Odds_Ratio}{The odds ratio of the diagnostic test, calculated as (TP * TN) / (FP * FN).}
+#' }
+#'
+#' @importFrom stats table
+#' @export
 compute_metrics <- function(predicted_probs, y, cutoff = 0.5) {
   # Convert predicted probabilities to predicted class labels using the cutoff
   predictions <- ifelse(predicted_probs > cutoff, 1, 0)
