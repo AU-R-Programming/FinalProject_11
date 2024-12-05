@@ -7,11 +7,23 @@ date: "2024-12-04"
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-#Section 1
+# FinalProject11 Vignette
+This package contains the basic functions to perform binary classification.
 
-## Heading
+## Read in data
+First we will need to install the package. This is done with the code below
+```{r}
 
+library(devtools)
+install_github("AU-R-Programming/FinalProject_11")
+library(FinalProject11)
 
+```
+## Optimization Function
+This function will get the estimate coefficients for
+```{r}
+optimization_fn(data, y)
+```
 
 # Section 2
 
