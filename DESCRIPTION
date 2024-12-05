@@ -1,6 +1,6 @@
 Package: FinalProject11
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Binary Classification Using Numerical Optimization
 Version: 0.1.0
 Author: Authors@R: c(
     person("Clayton", "Onwere", role = "aut"),
@@ -8,9 +8,11 @@ Author: Authors@R: c(
     person("Kade", "Nelson", role = c("aut", "cre"), email = "kjn0014@auburn.edu")
     )
 Maintainer: <kjn0014@auburn.edu>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Description: 
+    This R package implements supervised binary classification using numerical optimization. 
+    It includes functions to estimate regression coefficients, compute bootstrap confidence intervals, 
+    and generate confusion matrices with key metrics such as accuracy, sensitivity, and specificity.
+License: GPL-2
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

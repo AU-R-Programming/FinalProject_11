@@ -1,7 +1,6 @@
 ---
-title: "Vignette"
+title: "Binary Optimization Vignette"
 output: html_document
-date: "2024-12-04"
 editor_options: 
   markdown: 
     wrap: 72
@@ -13,8 +12,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # FinalProject11 Vignette
 
-This package contains the basic functions to perform binary
-classification.
+[https://github.com/AU-R-Programming/FinalProject_11]
+
+This R package implements supervised binary classification using 
+numerical optimization. It includes functions to estimate regression
+coefficients, compute bootstrap confidence intervals, and generate 
+confusion matrices with key metrics such as accuracy, sensitivity, 
+and specificity.
 
 ## Read in data
 
@@ -74,10 +78,35 @@ Estimated Beta below:
 beta_hat
 ```
 
-# Confidence Interval
+## Confidence Interval
+The `bootstrapCI` function computes bootstrap confidence 
+intervals for regression coefficients in a logistic regression 
+model using resampling with replacement. This method allows for the 
+estimation of the uncertainty of the regression coefficients by 
+generating multiple resamples of the data and calculating the 
+coefficients for each resample.
 
+The function allows you to plug in:
+
+* X: A matrix or data frame containing the predictor variables. 
+Each column represents a predictor, and the rows correspond to 
+individual observations.
+
+* y: A vector containing the response values (dependent variable) 
+corresponding to the observations in X.
+
+* alpha: A numeric value representing the significance level for 
+the confidence intervals. The default is 0.05, which corresponds 
+to a 95% confidence interval.
+
+* B: The number of bootstrap resamples to perform. The default 
+is 20. Increasing B can improve the precision of the confidence 
+intervals but will require more computational time.
+
+
+The confidence intervals for the `adult.csv` are:
 ```{r}
-bootstrapCI(X, y)
+bootstrapCI(X, y, alpha = 0.05, B = 20)
 ```
 
 #Section 3

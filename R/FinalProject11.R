@@ -236,3 +236,11 @@ compute_metrics <- function(predicted_probs, y, cutoff = 0.5) {
 
 ## https://chatgpt.com/share/674fc2c8-0348-8001-89a8-838a83fcc41f
 
+
+
+
+## More sources:
+## https://chatgpt.com/c/6751e2a9-7d90-8009-9aed-e3b370d8f2d4
+## https://chatgpt.com/c/674fc0f2-b26c-8001-b418-57a783676702
+
+
