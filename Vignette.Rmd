@@ -112,6 +112,7 @@ bootstrapCI(X, y, alpha = 0.05, B = 20)
 #Section 3
 
 ```{r}
+design <- model.matrix(~.,X)
 predicted_probs <- get_predicted_prob(beta = beta_hat, X = design)
 compute_metrics(predicted_probs = predicted_probs, y = y)
 
@@ -128,7 +129,7 @@ prevalence, accuracy, sensitivity, specificity, false discovery rate,
 and diagnostic odds ratio.
 
 ```{r}
-predicted_probs<-1/1+exp(-design %*% beta_optimized)
+#predicted_probs<-1/1+exp(-design %*% beta_optimized)
 predictions<- ifelse(predicted_probs>0.5,1,0)
 confusion_matrix<-table(Predicted=predicted_probs, Actual=y)
 print(confusion_matrix)
