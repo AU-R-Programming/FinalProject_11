@@ -46,9 +46,16 @@ Estimated Beta below:
 beta_hat
 ```
 # Section 2
-
+```{r}
+bootstrapCI(X, y)
+```
 
 
 #Section 3
 
+```{r}
+design <- model.matrix(~.,X)
+predicted_probs <- get_predicted_prob(beta = beta_hat, X = design)
+compute_metrics(predicted_probs = predicted_probs, y = y)
 
+```
