@@ -10,15 +10,15 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# FinalProject11 Vignette
+# Final Project 11 Vignette
 
-[https://github.com/AU-R-Programming/FinalProject_11]
+[<https://github.com/AU-R-Programming/FinalProject_11>]
 
-This R package implements supervised binary classification using 
+This R package implements supervised binary classification using
 numerical optimization. It includes functions to estimate regression
-coefficients, compute bootstrap confidence intervals, and generate 
-confusion matrices with key metrics such as accuracy, sensitivity, 
-and specificity.
+coefficients, compute bootstrap confidence intervals, and generate
+confusion matrices with key metrics such as accuracy, sensitivity, and
+specificity.
 
 ## Read in data
 
@@ -79,32 +79,33 @@ beta_hat
 ```
 
 ## Confidence Interval
-The `bootstrapCI` function computes bootstrap confidence 
-intervals for regression coefficients in a logistic regression 
-model using resampling with replacement. This method allows for the 
-estimation of the uncertainty of the regression coefficients by 
-generating multiple resamples of the data and calculating the 
-coefficients for each resample.
+
+The `bootstrapCI` function computes bootstrap confidence intervals for
+regression coefficients in a logistic regression model using resampling
+with replacement. This method allows for the estimation of the
+uncertainty of the regression coefficients by generating multiple
+resamples of the data and calculating the coefficients for each
+resample.
 
 The function allows you to plug in:
 
-* X: A matrix or data frame containing the predictor variables. 
-Each column represents a predictor, and the rows correspond to 
-individual observations.
+-   X: A matrix or data frame containing the predictor variables. Each
+    column represents a predictor, and the rows correspond to individual
+    observations.
 
-* y: A vector containing the response values (dependent variable) 
-corresponding to the observations in X.
+-   y: A vector containing the response values (dependent variable)
+    corresponding to the observations in X.
 
-* alpha: A numeric value representing the significance level for 
-the confidence intervals. The default is 0.05, which corresponds 
-to a 95% confidence interval.
+-   alpha: A numeric value representing the significance level for the
+    confidence intervals. The default is 0.05, which corresponds to a
+    95% confidence interval.
 
-* B: The number of bootstrap resamples to perform. The default 
-is 20. Increasing B can improve the precision of the confidence 
-intervals but will require more computational time.
-
+-   B: The number of bootstrap resamples to perform. The default is 20.
+    Increasing B can improve the precision of the confidence intervals
+    but will require more computational time.
 
 The confidence intervals for the `adult.csv` are:
+
 ```{r}
 bootstrapCI(X, y, alpha = 0.05, B = 20)
 ```
@@ -132,32 +133,28 @@ and diagnostic odds ratio.
 #predicted_probs<-1/1+exp(-design %*% beta_optimized)
 predictions<- ifelse(predicted_probs>0.5,1,0)
 confusion_matrix<-table(Predicted=predicted_probs, Actual=y)
-print(confusion_matrix)
+
 ```
 
 We will rename each quadrant of the confusion matrix for easier use when
 computing our metrics.
 
 ```{r}
-print(confusion_matrix)
-
 true_pos<-confusion_matrix[1,1]
 false_pos<-confusion_matrix[1,2]
 false_neg<-confusion_matrix[2,1]
 true_neg<-confusion_matrix[2,2]
 ```
 
-#Prevalence
-This is the proportion of actual positives in the data set
-out of all observations.
+**Prevalence** This is the proportion of actual positives in the data
+set out of all observations.
 
 ```{r}
 prevalence <- (true_pos+false_neg)/sum(confusion_matrix)
 print(prevalence)
 ```
 
-#Accuracy
-This is the proportion of corrected predictions for both
+**Accuracy** This is the proportion of corrected predictions for both
 positive and negative out of all observations.
 
 ```{r}
@@ -165,37 +162,34 @@ accuracy <- (true_pos+true_neg)/sum(confusion_matrix)
 print(accuracy)
 ```
 
-#Sensitivity
-Here we find the proportion of correctly predicted positive
-instances out of all positive instances
+**Sensitivity** Here we find the proportion of correctly predicted
+positive instances out of all positive instances.
 
 ```{r}
 sensitivity<-true_pos/(true_pos+false_neg)
 print(sensitivity)
 ```
 
-#Specificity
-Here this is the proportion of correctly predicted negative
-instances out of all negative outcomes
+**Specificity** Here this is the proportion of correctly predicted
+negative instances out of all negative outcomes.
 
 ```{r}
 specificity <- true_neg/(true_neg+false_pos)
 print(specificity)
 ```
 
-#False Discovery Rate 
-This is the proportion of incorrect positive
-predictions out of all postive outcomes
+**False Discovery Rate** This is the proportion of incorrect positive
+predictions out of all positive outcomes.
 
 ```{r}
 false_discovery_rate <- false_pos/(true_pos+false_pos)
 print(false_discovery_rate)
 ```
 
-#Diagnostic Odds Ratio 
-This metric summarizes the performances of a
-diagnostic test by combining the sensitivity and specificity metrics.
-High DOR indicates a good test with low false positives and negatives.
+**Diagnostic Odds Ratio** This metric summarizes the performances of
+the diagnostic test by combining the sensitivity and specificity
+metrics. High DOR indicates a good test with low false positives and
+negatives.
 
 ```{r}
 diagnostic_odds_ratio<-(true_pos+true_neg)/(false_pos+false_neg)
