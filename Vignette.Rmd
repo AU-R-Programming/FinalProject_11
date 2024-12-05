@@ -36,9 +36,15 @@ Now that our data is prepared we can pass these values into the `omptimization_f
 result <- optimization_fn(X, y)
 beta_hat <- result$beta_hat
 init_beta <- result$init_beta
-
 ```
-
+Initial Beta below:
+```{r}
+init_beta
+```
+Estimated Beta below:
+```{r}
+beta_hat
+```
 # Section 2
 
 

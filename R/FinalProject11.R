@@ -73,8 +73,8 @@ optimization_fn <- function(X, y) {
   return(list(beta_hat = beta_hat, init_beta = init_beta))
 }
 
-https://claude.ai/chat/cebba8ab-1cc3-4320-9609-89ea61ad049c
-https://chatgpt.com/c/6751c9c7-fc98-800e-8212-de94c6684a51
+#https://claude.ai/chat/cebba8ab-1cc3-4320-9609-89ea61ad049c
+#https://chatgpt.com/c/6751c9c7-fc98-800e-8212-de94c6684a51
 
 ## work here
 # library(roxygen2)

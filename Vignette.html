@@ -368,15 +368,18 @@ below.</p>
 <pre class="r"><code>install_github(&quot;AU-R-Programming/FinalProject_11&quot;)</code></pre>
 <pre><code>## Downloading GitHub repo AU-R-Programming/FinalProject_11@HEAD</code></pre>
 <pre><code>## ── R CMD build ─────────────────────────────────────────────────────────────────
-##      checking for file ‘/private/var/folders/s_/3tl8z9d11l3_zj7dg7c_gt340000gn/T/Rtmp4pd4no/remotes84c4b3dce6c/AU-R-Programming-FinalProject_11-81ca1ef/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/s_/3tl8z9d11l3_zj7dg7c_gt340000gn/T/Rtmp4pd4no/remotes84c4b3dce6c/AU-R-Programming-FinalProject_11-81ca1ef/DESCRIPTION’
+##      checking for file ‘/private/var/folders/s_/3tl8z9d11l3_zj7dg7c_gt340000gn/T/Rtmpnyd42b/remotes87e472f99e14/AU-R-Programming-FinalProject_11-2dba3ab/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/s_/3tl8z9d11l3_zj7dg7c_gt340000gn/T/Rtmpnyd42b/remotes87e472f99e14/AU-R-Programming-FinalProject_11-2dba3ab/DESCRIPTION’
 ##   ─  preparing ‘FinalProject11’:
 ##      checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
 ##   ─  checking for LF line-endings in source and make files and shell scripts
 ##   ─  checking for empty or unneeded directories
 ##    Omitted ‘LazyData’ from DESCRIPTION
-##   ─  building ‘FinalProject11_0.1.0.tar.gz’
+## ─  building ‘FinalProject11_0.1.0.tar.gz’
 ##      
 ## </code></pre>
+<pre><code>## Warning in i.p(...): installation of package
+## &#39;/var/folders/s_/3tl8z9d11l3_zj7dg7c_gt340000gn/T//Rtmpnyd42b/file87e461f96e04/FinalProject11_0.1.0.tar.gz&#39;
+## had non-zero exit status</code></pre>
 <pre class="r"><code>library(FinalProject11)</code></pre>
 </div>
 <div id="preparing-the-data" class="section level2">
@@ -401,9 +404,42 @@ y &lt;- ifelse(data$NA. == &quot; &lt;=50K&quot;, 0, 1)</code></pre>
 <h2>Optimization</h2>
 <p>Now that our data is prepared we can pass these values into the
 <code>omptimization_fn</code> function in our package. This function
-will estimate the coefficient vector <span class="math inline">\(\beta\)</span> for our data.</p>
-<pre class="r"><code>beta_hat &lt;- optimization_fn(X, y)
-beta_hat</code></pre>
+will estimate the coefficient vector <span class="math inline">\(\beta\)</span> for our data. It will return a
+<code>beta_hat</code> as well as an <code>init_beta</code></p>
+<pre class="r"><code>result &lt;- optimization_fn(X, y)
+beta_hat &lt;- result$beta_hat
+init_beta &lt;- result$init_beta</code></pre>
+<p>Initial Beta below:</p>
+<pre class="r"><code>init_beta</code></pre>
+<pre><code>##                                    [,1]
+## (Intercept)                  0.18494639
+## education 11th               0.01643143
+## education 12th               0.04459494
+## education 1st-4th           -0.06045663
+## education 5th-6th           -0.06891728
+## education 7th-8th           -0.07147836
+## education 9th               -0.04097625
+## education Assoc-acdm         0.15780611
+## education Assoc-voc          0.14851595
+## education Bachelors          0.29410126
+## education Doctorate          0.55657104
+## education HS-grad            0.05934740
+## education Masters            0.41082641
+## education Preschool         -0.05820980
+## education Prof-school        0.54097022
+## education Some-college       0.12108488
+## relationship Not-in-family  -0.31500529
+## relationship Other-relative -0.30561161
+## relationship Own-child      -0.35710732
+## relationship Unmarried      -0.29749646
+## relationship Wife            0.08001244
+## race Asian-Pac-Islander      0.01769580
+## race Black                   0.03627375
+## race Other                  -0.02032647
+## race White                   0.05581290
+## sex Male                     0.05169943</code></pre>
+<p>Estimated Beta below:</p>
+<pre class="r"><code>beta_hat</code></pre>
 <pre><code>##                                     [,1]
 ## (Intercept)                 -0.979052462
 ## education 11th               0.115689669
