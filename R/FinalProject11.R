@@ -144,7 +144,7 @@ bootstrapCI <- function(X, y, alpha = 0.05, B = 20) {
 
 
 
-
+#https://claude.ai/chat/2500ffb0-c355-40d9-8acb-cacb401f0f17
 ## https://chatgpt.com/share/674fbe0f-bb04-8009-a85f-4bd1ca6ae0e2
 
 
