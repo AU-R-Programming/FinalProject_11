@@ -40,7 +40,7 @@ get_initial_beta <- function(X, y) {
 
 
 
-#' @title Fit Logistic Regression Model
+#' @title Optimize Logistic Regression Coefficients
 #'
 #' @description Estimates the coefficients of a logistic regression model using numerical optimization.
 #' This function minimizes the negative log-likelihood of the logistic regression model.
@@ -78,7 +78,7 @@ optimization_fn <- function(X, y) {
 # ?bootstrapCI
 
 
-#' @title Bootstrap Confidence Intervals
+#' @title Bootstrap Confidence Intervals for Regression Coefficients"
 #'
 #' @description Computes bootstrap confidence intervals for regression coefficients
 #' using resampling with replacement.
@@ -149,7 +149,7 @@ bootstrapCI <- function(X, y, alpha = 0.05, B = 20) {
 
 ## work here
 
-#' @title Compute Model Evaluation Metrics
+#' @title Evaluate Binary Classification Model Performance
 #'
 #' @description Computes various performance metrics to evaluate a binary classification model.
 #' The function calculates metrics such as accuracy, sensitivity, specificity, and more,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/FinalProject11.R
 \name{compute_metrics}
 \alias{compute_metrics}
-\title{Compute Model Evaluation Metrics}
+\title{Evaluate Binary Classification Model Performance}
 \usage{
 compute_metrics(predicted_probs, y, cutoff = 0.5)
 }

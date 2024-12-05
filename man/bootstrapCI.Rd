@@ -2,7 +2,7 @@
 % Please edit documentation in R/FinalProject11.R
 \name{bootstrapCI}
 \alias{bootstrapCI}
-\title{Bootstrap Confidence Intervals}
+\title{Bootstrap Confidence Intervals for Regression Coefficients"}
 \usage{
 bootstrapCI(X, y, alpha = 0.05, B = 20)
 }

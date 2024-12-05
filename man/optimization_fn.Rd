@@ -2,7 +2,7 @@
 % Please edit documentation in R/FinalProject11.R
 \name{optimization_fn}
 \alias{optimization_fn}
-\title{Fit Logistic Regression Model}
+\title{Optimize Logistic Regression Coefficients}
 \usage{
 optimization_fn(X, y)
 }
