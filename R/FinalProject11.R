@@ -27,13 +27,13 @@ get_predicted_prob <- function(beta, X) {
 # The arguments passed are at the ith observation to be used in the optimization
 # function
 loss_fn <- function(beta, X_i, y_i) {
-  p_i <- get_predicted_prob(beta, X)
+  p_i <- get_predicted_prob(beta, X_i)
   loss <- sum(-y_i * log(p_i) - (1 - y_i) * log(1 - p_i))
   return(loss)
 }
 
 get_initial_beta <- function(X, y) {
-  lambda <- 1e-5
+  lambda <- 1e-3
   XtX <- (t(X) %*% X) + lambda * diag(ncol(X))
   solve(XtX) %*% t(X) %*% y
 }
