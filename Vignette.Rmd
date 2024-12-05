@@ -8,10 +8,11 @@ date: "2024-12-04"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 # FinalProject11 Vignette
-This package contains the basic functions to perform binary classification.
+This package contains the basic functions to perform binary classification. 
+
 
 ## Read in data
-First we will need to install the package. This is done with the code below
+First we will need to install the package. This is done with the code below.
 ```{r}
 
 library(devtools)
@@ -19,18 +20,25 @@ install_github("AU-R-Programming/FinalProject_11")
 library(FinalProject11)
 
 ```
-## Optimization Function
-This function will get the estimate coefficients for
+## Preparing the Data
+First we will need to prepare our data so that it is compatible with our optimization functions. We will do this by reading in the csv and choosing columns that will be compatible with binary classification. We will also choose a predictor, y. For this example we will be using `adult.csv` and looking at `education`, `relationship`, `race`, `sex` as our predictors and we will look at the `NA` category as our response (represents if the income is over/ under 50K). The function will handle adding an intercept to our predictors, but we will need to ensure that y, our response is a column of binary values.
 ```{r}
 data <- read.csv("adult.csv", sep = ";")
 chosen_columns <- c('education', 'relationship', 'race', 'sex')
-design <- data[ ,chosen_columns]
+X <- data[ ,chosen_columns]
 # ensure y is a binary n x 1 matrix
 y <- ifelse(data$NA. == " <=50K", 0, 1)
+```
 
-optimization_fn(design, y)
+## Optimization
+Now that our data is prepared we can pass these values into the `omptimization_fn` function in our package. This function will estimate the coefficient vector $\beta$ for our data. It will return a `beta_hat` as well as an `init_beta`
+```{r}
+result <- optimization_fn(X, y)
+beta_hat <- result$beta_hat
+init_beta <- result$init_beta
 
 ```
+
 # Section 2
 
 
