@@ -133,6 +133,7 @@ bootstrapCI <- function(X, y, alpha = 0.05, B = 20) {
     CI[j, ] <- quantile(beta_hat_matrix[, j], probs = c(alpha / 2, 1 - alpha / 2))
   }
 
+
   # Add labels to the output
   colnames(CI) <- c("Lower Bound", "Upper Bound")
   rownames(CI) <- colnames(design)
