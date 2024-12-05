@@ -74,7 +74,7 @@ Estimated Beta below:
 beta_hat
 ```
 
-# Section 2
+# Confidence Interval
 
 ```{r}
 bootstrapCI(X, y)
