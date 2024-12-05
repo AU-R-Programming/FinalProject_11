@@ -110,8 +110,9 @@ optimization_fn <- function(X, y) {
 #' @export
 bootstrapCI <- function(X, y, alpha = 0.05, B = 20) {
   n <- nrow(X)  # Number of observations
-  X <- cbind(1, X)  # Add intercept column
-  p <- ncol(X)  # Number of predictors (including intercept)
+  design <- model.matrix(~., X)  # Automatically adds intercept
+
+  p <- ncol(design)  # Number of predictors (including intercept)
 
   # Matrix to store beta estimates for each bootstrap iteration
   beta_hat_matrix <- matrix(0, nrow = B, ncol = p)
@@ -119,23 +120,22 @@ bootstrapCI <- function(X, y, alpha = 0.05, B = 20) {
   for (b in 1:B) {
     # Resample the data with replacement
     sample_indices <- sample(1:n, n, replace = TRUE)
-    X_boot <- X[sample_indices, ]
+    X_boot <- design[sample_indices, ]
     y_boot <- y[sample_indices]
 
-    # Use the provided optimization function to estimate beta coefficients
-    beta_hat <- optimization_fn(X_boot, y_boot)$beta_hat
-    beta_hat_matrix[b, ] <- beta_hat
+    # Directly access the beta_hat from optimization function
+    beta_hat_matrix[b, ] <- optimization_fn(as.data.frame(X_boot[, -1]), y_boot)$beta_hat
   }
 
   # Calculate confidence intervals for each coefficient
   CI <- matrix(0, nrow = p, ncol = 2)
   for (j in 1:p) {
-    CI[j, ] <- quantile(beta_hat[, j], probs = c(alpha / 2, 1 - alpha / 2))
+    CI[j, ] <- quantile(beta_hat_matrix[, j], probs = c(alpha / 2, 1 - alpha / 2))
   }
 
   # Add labels to the output
   colnames(CI) <- c("Lower Bound", "Upper Bound")
-  rownames(CI) <- colnames(X)
+  rownames(CI) <- colnames(design)
 
   return(CI)
 }
