@@ -114,7 +114,7 @@ bootstrapCI <- function(X, y, alpha = 0.05, B = 20) {
   p <- ncol(X)  # Number of predictors (including intercept)
 
   # Matrix to store beta estimates for each bootstrap iteration
-  beta_hat <- matrix(0, nrow = B, ncol = p)
+  beta_hat_matrix <- matrix(0, nrow = B, ncol = p)
 
   for (b in 1:B) {
     # Resample the data with replacement
@@ -123,7 +123,8 @@ bootstrapCI <- function(X, y, alpha = 0.05, B = 20) {
     y_boot <- y[sample_indices]
 
     # Use the provided optimization function to estimate beta coefficients
-    beta_hat[b, ] <- optimization_fn(X_boot, y_boot)
+    beta_hat <- optimization_fn(X_boot, y_boot)$beta_hat
+    beta_hat_matrix[b, ] <- beta_hat
   }
 
   # Calculate confidence intervals for each coefficient
