@@ -23,8 +23,8 @@ library(FinalProject11)
 This function will get the estimate coefficients for
 ```{r}
 data <- read.csv("adult.csv", sep = ";")
-chosen_columns <- ['education', 'relationship', 'race', 'sex']
-design <- data[chosen_columns]
+chosen_columns <- c('education', 'relationship', 'race', 'sex')
+design <- data[ ,chosen_columns]
 # ensure y is a binary n x 1 matrix
 y <- ifelse(data$NA. == " <=50K", 0, 1)
 
