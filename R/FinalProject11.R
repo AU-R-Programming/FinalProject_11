@@ -62,7 +62,7 @@ optimization_fn <- function(X, y) {
   design <- model.matrix(~., X)
   initial_beta <- get_initial_beta(design, y)
 
-  result <- optim(par = initial_beta, fn = loss_fn)
+  result <- optim(par = initial_beta, fn = loss_fn, X_i = design, y_i = y)
 
   beta_hat <- result$par
   return(beta_hat)
