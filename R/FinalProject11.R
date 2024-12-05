@@ -33,7 +33,7 @@ loss_fn <- function(beta, X_i, y_i) {
 }
 
 get_initial_beta <- function(X, y) {
-  lambda <- 1e -5
+  lambda <- 1e-5
   XtX <- (t(X) %*% X) + lambda
   solve(XtX) %*% t(X) %*% y
 }
@@ -226,3 +226,4 @@ compute_metrics <- function(predicted_probs, y, cutoff = 0.5) {
 }
 
 ## https://chatgpt.com/share/674fc2c8-0348-8001-89a8-838a83fcc41f
+
