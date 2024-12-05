@@ -58,3 +58,70 @@ predicted_probs <- get_predicted_prob(beta = beta_hat, X = design)
 compute_metrics(predicted_probs = predicted_probs, y = y)
 
 ```
+
+
+
+## Confusion Matrix Metrics
+Next we will create a confusion based off of the results from an if-else statement, we assigned values for predictions based off of their cutoff point. This cutoff point being 0.5, where values above are assigned 1, and below the cutoff they are assigned 0. We will test the following metrics on the confusion matrix made from the predictions. These are prevalence, accuracy, sensitivity, specificity, false discovery rate, and diagnostic odds ratio.
+```{r}
+predicted_probs<-1/1+exp(-design %*% beta_optimized)
+predictions<- ifelse(predicted_probs>0.5,1,0)
+confusion_matrix<-table(Predicted=predicted_probs, Actual=y)
+print(confusion_matrix)
+```
+
+We will rename each quadrant of the confusion matrix for easier use when computing our metrics.
+```{r}
+print(confusion_matrix)
+
+true_pos<-confusion_matrix[1,1]
+false_pos<-confusion_matrix[1,2]
+false_neg<-confusion_matrix[2,1]
+true_neg<-confusion_matrix[2,2]
+```
+
+#Prevalence
+This is the proportion of actual positives in the data set out of all observations.
+```{r}
+prevalence <- (true_pos+false_neg)/sum(confusion_matrix)
+print(prevalence)
+```
+
+#Accuracy
+This is the proportion of corrected predictions for both positive and negative out of all observations.
+```{r}
+accuracy <- (true_pos+true_neg)/sum(confusion_matrix)
+print(accuracy)
+```
+
+#Sensitivity
+Here we find the proportion of correctly predicted positive instances out of all positive instances
+```{r}
+sensitivity<-true_pos/(true_pos+false_neg)
+print(sensitivity)
+```
+
+#Specificity
+Here this is the proportion of correctly predicted negative instances out of all negative outcomes
+```{r}
+specificity <- true_neg/(true_neg+false_pos)
+print(specificity)
+```
+
+#False Discovery Rate
+This is the proportion of incorrect positive predictions out of all postive outcomes
+```{r}
+false_discovery_rate <- false_pos/(true_pos+false_pos)
+print(false_discovery_rate)
+```
+
+#Diagnostic Odds Ratio
+This metric summarizes the performances of a diagnostic test by combining the sensitivity and specificity metrics. High DOR indicates a good test with low false positives and negatives. 
+```{r}
+diagnostic_odds_ratio<-(true_pos+true_neg)/(false_pos+false_neg)
+print(diagnostic_odds_ratio)
+```
+
+
+
+
