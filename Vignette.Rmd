@@ -2,17 +2,25 @@
 title: "Vignette"
 output: html_document
 date: "2024-12-04"
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-# FinalProject11 Vignette
-This package contains the basic functions to perform binary classification. 
 
+# FinalProject11 Vignette
+
+This package contains the basic functions to perform binary
+classification.
 
 ## Read in data
-First we will need to install the package. This is done with the code below.
+
+First we will need to install the package. This is done with the code
+below.
+
 ```{r}
 
 library(devtools)
@@ -20,8 +28,19 @@ install_github("AU-R-Programming/FinalProject_11")
 library(FinalProject11)
 
 ```
+
 ## Preparing the Data
-First we will need to prepare our data so that it is compatible with our optimization functions. We will do this by reading in the csv and choosing columns that will be compatible with binary classification. We will also choose a predictor, y. For this example we will be using `adult.csv` and looking at `education`, `relationship`, `race`, `sex` as our predictors and we will look at the `NA` category as our response (represents if the income is over/ under 50K). The function will handle adding an intercept to our predictors, but we will need to ensure that y, our response is a column of binary values.
+
+First we will need to prepare our data so that it is compatible with our
+optimization functions. We will do this by reading in the csv and
+choosing columns that will be compatible with binary classification. We
+will also choose a predictor, y. For this example we will be using
+`adult.csv` and looking at `education`, `relationship`, `race`, `sex` as
+our predictors and we will look at the `NA` category as our response
+(represents if the income is over/ under 50K). The function will handle
+adding an intercept to our predictors, but we will need to ensure that
+y, our response is a column of binary values.
+
 ```{r}
 data <- read.csv("adult.csv", sep = ";")
 chosen_columns <- c('education', 'relationship', 'race', 'sex')
@@ -31,25 +50,35 @@ y <- ifelse(data$NA. == " <=50K", 0, 1)
 ```
 
 ## Optimization
-Now that our data is prepared we can pass these values into the `omptimization_fn` function in our package. This function will estimate the coefficient vector $\beta$ for our data. It will return a `beta_hat` as well as an `init_beta`
+
+Now that our data is prepared we can pass these values into the
+`omptimization_fn` function in our package. This function will estimate
+the coefficient vector $\beta$ for our data. It will return a `beta_hat`
+as well as an `init_beta`
+
 ```{r}
 result <- optimization_fn(X, y)
 beta_hat <- result$beta_hat
 init_beta <- result$init_beta
 ```
+
 Initial Beta below:
+
 ```{r}
 init_beta
 ```
+
 Estimated Beta below:
+
 ```{r}
 beta_hat
 ```
+
 # Section 2
+
 ```{r}
 bootstrapCI(X, y)
 ```
-
 
 #Section 3
 
@@ -59,10 +88,16 @@ compute_metrics(predicted_probs = predicted_probs, y = y)
 
 ```
 
-
-
 ## Confusion Matrix Metrics
-Next we will create a confusion based off of the results from an if-else statement, we assigned values for predictions based off of their cutoff point. This cutoff point being 0.5, where values above are assigned 1, and below the cutoff they are assigned 0. We will test the following metrics on the confusion matrix made from the predictions. These are prevalence, accuracy, sensitivity, specificity, false discovery rate, and diagnostic odds ratio.
+
+Next we will create a confusion based off of the results from an if-else
+statement, we assigned values for predictions based off of their cutoff
+point. This cutoff point being 0.5, where values above are assigned 1,
+and below the cutoff they are assigned 0. We will test the following
+metrics on the confusion matrix made from the predictions. These are
+prevalence, accuracy, sensitivity, specificity, false discovery rate,
+and diagnostic odds ratio.
+
 ```{r}
 predicted_probs<-1/1+exp(-design %*% beta_optimized)
 predictions<- ifelse(predicted_probs>0.5,1,0)
@@ -70,7 +105,9 @@ confusion_matrix<-table(Predicted=predicted_probs, Actual=y)
 print(confusion_matrix)
 ```
 
-We will rename each quadrant of the confusion matrix for easier use when computing our metrics.
+We will rename each quadrant of the confusion matrix for easier use when
+computing our metrics.
+
 ```{r}
 print(confusion_matrix)
 
@@ -81,47 +118,56 @@ true_neg<-confusion_matrix[2,2]
 ```
 
 #Prevalence
-This is the proportion of actual positives in the data set out of all observations.
+This is the proportion of actual positives in the data set
+out of all observations.
+
 ```{r}
 prevalence <- (true_pos+false_neg)/sum(confusion_matrix)
 print(prevalence)
 ```
 
 #Accuracy
-This is the proportion of corrected predictions for both positive and negative out of all observations.
+This is the proportion of corrected predictions for both
+positive and negative out of all observations.
+
 ```{r}
 accuracy <- (true_pos+true_neg)/sum(confusion_matrix)
 print(accuracy)
 ```
 
 #Sensitivity
-Here we find the proportion of correctly predicted positive instances out of all positive instances
+Here we find the proportion of correctly predicted positive
+instances out of all positive instances
+
 ```{r}
 sensitivity<-true_pos/(true_pos+false_neg)
 print(sensitivity)
 ```
 
 #Specificity
-Here this is the proportion of correctly predicted negative instances out of all negative outcomes
+Here this is the proportion of correctly predicted negative
+instances out of all negative outcomes
+
 ```{r}
 specificity <- true_neg/(true_neg+false_pos)
 print(specificity)
 ```
 
-#False Discovery Rate
-This is the proportion of incorrect positive predictions out of all postive outcomes
+#False Discovery Rate 
+This is the proportion of incorrect positive
+predictions out of all postive outcomes
+
 ```{r}
 false_discovery_rate <- false_pos/(true_pos+false_pos)
 print(false_discovery_rate)
 ```
 
-#Diagnostic Odds Ratio
-This metric summarizes the performances of a diagnostic test by combining the sensitivity and specificity metrics. High DOR indicates a good test with low false positives and negatives. 
+#Diagnostic Odds Ratio 
+This metric summarizes the performances of a
+diagnostic test by combining the sensitivity and specificity metrics.
+High DOR indicates a good test with low false positives and negatives.
+
 ```{r}
 diagnostic_odds_ratio<-(true_pos+true_neg)/(false_pos+false_neg)
 print(diagnostic_odds_ratio)
 ```
-
-
-
-
