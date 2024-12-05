@@ -365,12 +365,9 @@ specificity.</p>
 <h2>Read in data</h2>
 <p>First we will need to install the package. This is done with the code
 below.</p>
-<pre class="r"><code>library(devtools)</code></pre>
-<pre><code>## Loading required package: usethis</code></pre>
-<pre class="r"><code>install_github(&quot;AU-R-Programming/FinalProject_11&quot;)</code></pre>
-<pre><code>## Skipping install of &#39;FinalProject11&#39; from a github remote, the SHA1 (222b4d3d) has not changed since last install.
-##   Use `force = TRUE` to force installation</code></pre>
-<pre class="r"><code>library(FinalProject11)</code></pre>
+<pre class="r"><code>library(devtools)
+install_github(&quot;AU-R-Programming/FinalProject_11&quot;)
+library(FinalProject11)</code></pre>
 </div>
 <div id="preparing-the-data" class="section level2">
 <h2>Preparing the Data</h2>
@@ -482,34 +479,36 @@ but will require more computational time.</p></li>
 </ul>
 <p>The confidence intervals for the <code>adult.csv</code> are:</p>
 <pre class="r"><code>bootstrapCI(X, y, alpha = 0.05, B = 20)</code></pre>
-<pre><code>##                               Lower Bound Upper Bound
-## (Intercept)                 -1.1487018854 -0.89906928
-## education 11th               0.0256674082  0.19969055
-## education 12th              -0.0137299443  0.31710317
-## education 1st-4th           -0.0178162474  0.08645200
-## education 5th-6th           -0.0619745801  0.15620804
-## education 7th-8th           -0.0513625565  0.05430900
-## education 9th               -0.0604482703  0.46545928
-## education Assoc-acdm         0.1294506426  0.26039704
-## education Assoc-voc          0.0807514785  0.27217675
-## education Bachelors          0.2988629171  0.48226276
-## education Doctorate          0.1219431235  1.09970801
-## education HS-grad           -0.1456959295 -0.03177577
-## education Masters            0.4340190145  0.66771896
-## education Preschool         -0.2177796934  0.08841547
-## education Prof-school        0.1597408305  1.09724686
-## education Some-college       0.0237750506  0.36385431
-## relationship Not-in-family  -0.4710086284 -0.33604610
-## relationship Other-relative -0.2988298591 -0.16264341
-## relationship Own-child      -0.6553788371 -0.38709537
-## relationship Unmarried      -0.4470076533 -0.21401336
-## relationship Wife            0.1446691028  0.70354598
-## race Asian-Pac-Islander      0.0125336348  0.12516746
-## race Black                  -0.0339996021  0.12092933
-## race Other                   0.0003966774  0.18282808
-## race White                  -0.4134550523 -0.18260975
-## sex Male                     0.0395605498  0.24080490</code></pre>
-<p>#Section 3</p>
+<pre><code>##                             Lower Bound  Upper Bound
+## (Intercept)                 -1.09624089 -0.874009190
+## education 11th               0.08366182  0.183860286
+## education 12th              -0.01863651  0.308756169
+## education 1st-4th           -0.05450145  0.135154467
+## education 5th-6th           -0.03544594  0.180637101
+## education 7th-8th           -0.05922266  0.032458170
+## education 9th               -0.01850072  0.519017789
+## education Assoc-acdm         0.15123419  0.226523023
+## education Assoc-voc          0.12366906  0.203639285
+## education Bachelors          0.33651903  0.505638483
+## education Doctorate          0.17888282  0.981812246
+## education HS-grad           -0.14156836 -0.008474794
+## education Masters            0.47272516  0.673060905
+## education Preschool         -0.23773578  0.103951811
+## education Prof-school        0.16223241  1.051477830
+## education Some-college       0.03688419  0.378624553
+## relationship Not-in-family  -0.45689399 -0.359466873
+## relationship Other-relative -0.26302116 -0.173870350
+## relationship Own-child      -0.68116452 -0.343958746
+## relationship Unmarried      -0.40198517 -0.230135263
+## relationship Wife            0.12589132  0.707318828
+## race Asian-Pac-Islander      0.02138177  0.119888569
+## race Black                  -0.00448901  0.157178195
+## race Other                  -0.03219864  0.150804351
+## race White                  -0.42503153 -0.207400841
+## sex Male                     0.05693568  0.185578646</code></pre>
+</div>
+<div id="confusion-matrix-metrics" class="section level2">
+<h2>Confusion Matrix Metrics</h2>
 <pre class="r"><code>design &lt;- model.matrix(~.,X)
 predicted_probs &lt;- get_predicted_prob(beta = beta_hat, X = design)
 compute_metrics(predicted_probs = predicted_probs, y = y)</code></pre>
@@ -536,9 +535,8 @@ compute_metrics(predicted_probs = predicted_probs, y = y)</code></pre>
 ## 
 ## $Diagnostic_Odds_Ratio
 ## [1] 6.21926</code></pre>
-</div>
-<div id="confusion-matrix-metrics" class="section level2">
-<h2>Confusion Matrix Metrics</h2>
+<p>The process to create the Confusion Matrix Metrics function is
+below:</p>
 <p>Next we will create a confusion based off of the results from an
 if-else statement, we assigned values for predictions based off of their
 cutoff point. This cutoff point being 0.5, where values above are
