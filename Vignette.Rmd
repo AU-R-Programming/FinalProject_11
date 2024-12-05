@@ -22,9 +22,14 @@ library(FinalProject11)
 ## Optimization Function
 This function will get the estimate coefficients for
 ```{r}
-optimization_fn(data, y)
-```
+data <- read.csv("adult.csv", sep = ";")
 
+# ensure y is a binary n x 1 matrix
+y <- ifelse(data$NA. == " <=50K", 0, 1)
+
+optimization_fn(data, y)
+
+```
 # Section 2
 
 

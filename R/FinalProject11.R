@@ -33,7 +33,9 @@ loss_fn <- function(beta, X_i, y_i) {
 }
 
 get_initial_beta <- function(X, y) {
-  solve(t(X) %*% X) %*% t(X) %*% y
+  lambda <- 1e -5
+  XtX <- (t(X) %*% X) + lambda
+  solve(XtX) %*% t(X) %*% y
 }
 
 
@@ -57,8 +59,6 @@ get_initial_beta <- function(X, y) {
 optimization_fn <- function(X, y) {
 
   n <- nrow(X)
-  # add intercept to data
-  # TODO Replace with model.matrix()
   design <- model.matrix(~., X)
   initial_beta <- get_initial_beta(design, y)
 
