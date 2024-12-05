@@ -34,7 +34,7 @@ loss_fn <- function(beta, X_i, y_i) {
 
 get_initial_beta <- function(X, y) {
   lambda <- 1e-5
-  XtX <- (t(X) %*% X) + lambda
+  XtX <- (t(X) %*% X) + lambda * diag(ncol(X))
   solve(XtX) %*% t(X) %*% y
 }
 
