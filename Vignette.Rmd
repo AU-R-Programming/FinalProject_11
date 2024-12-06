@@ -119,7 +119,7 @@ compute_metrics(predicted_probs = predicted_probs, y = y)
 
 ```
 
-The process to create the Confusion Matrix Metrics function is below:
+The process and steps to create the Confusion Matrix Metrics function are below:
 
 Next we will create a confusion based off of the results from an if-else
 statement, we assigned values for predictions based off of their cutoff
@@ -140,10 +140,10 @@ We will rename each quadrant of the confusion matrix for easier use when
 computing our metrics.
 
 ```{r}
-true_pos<-confusion_matrix[1,1]
-false_pos<-confusion_matrix[1,2]
-false_neg<-confusion_matrix[2,1]
-true_neg<-confusion_matrix[2,2]
+true_pos <- confusion_matrix[2, 2]  # Predicted = 1, Actual = 1
+false_pos <- confusion_matrix[2, 1]  # Predicted = 1, Actual = 0
+false_neg <- confusion_matrix[1, 2]  # Predicted = 0, Actual = 1
+true_neg <- confusion_matrix[1, 1]   # Predicted = 0, Actual = 0
 ```
 
 **Prevalence** This is the proportion of actual positives in the data
@@ -151,7 +151,6 @@ set out of all observations.
 
 ```{r}
 prevalence <- (true_pos+false_neg)/sum(confusion_matrix)
-print(prevalence)
 ```
 
 **Accuracy** This is the proportion of corrected predictions for both
@@ -159,7 +158,6 @@ positive and negative out of all observations.
 
 ```{r}
 accuracy <- (true_pos+true_neg)/sum(confusion_matrix)
-print(accuracy)
 ```
 
 **Sensitivity** Here we find the proportion of correctly predicted
@@ -167,7 +165,6 @@ positive instances out of all positive instances.
 
 ```{r}
 sensitivity<-true_pos/(true_pos+false_neg)
-print(sensitivity)
 ```
 
 **Specificity** Here this is the proportion of correctly predicted
@@ -175,7 +172,6 @@ negative instances out of all negative outcomes.
 
 ```{r}
 specificity <- true_neg/(true_neg+false_pos)
-print(specificity)
 ```
 
 **False Discovery Rate** This is the proportion of incorrect positive
@@ -183,7 +179,6 @@ predictions out of all positive outcomes.
 
 ```{r}
 false_discovery_rate <- false_pos/(true_pos+false_pos)
-print(false_discovery_rate)
 ```
 
 **Diagnostic Odds Ratio** This metric summarizes the performances of
@@ -193,5 +188,4 @@ negatives.
 
 ```{r}
 diagnostic_odds_ratio<-(true_pos+true_neg)/(false_pos+false_neg)
-print(diagnostic_odds_ratio)
 ```

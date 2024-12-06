@@ -479,33 +479,33 @@ but will require more computational time.</p></li>
 </ul>
 <p>The confidence intervals for the <code>adult.csv</code> are:</p>
 <pre class="r"><code>bootstrapCI(X, y, alpha = 0.05, B = 20)</code></pre>
-<pre><code>##                             Lower Bound  Upper Bound
-## (Intercept)                 -1.09624089 -0.874009190
-## education 11th               0.08366182  0.183860286
-## education 12th              -0.01863651  0.308756169
-## education 1st-4th           -0.05450145  0.135154467
-## education 5th-6th           -0.03544594  0.180637101
-## education 7th-8th           -0.05922266  0.032458170
-## education 9th               -0.01850072  0.519017789
-## education Assoc-acdm         0.15123419  0.226523023
-## education Assoc-voc          0.12366906  0.203639285
-## education Bachelors          0.33651903  0.505638483
-## education Doctorate          0.17888282  0.981812246
-## education HS-grad           -0.14156836 -0.008474794
-## education Masters            0.47272516  0.673060905
-## education Preschool         -0.23773578  0.103951811
-## education Prof-school        0.16223241  1.051477830
-## education Some-college       0.03688419  0.378624553
-## relationship Not-in-family  -0.45689399 -0.359466873
-## relationship Other-relative -0.26302116 -0.173870350
-## relationship Own-child      -0.68116452 -0.343958746
-## relationship Unmarried      -0.40198517 -0.230135263
-## relationship Wife            0.12589132  0.707318828
-## race Asian-Pac-Islander      0.02138177  0.119888569
-## race Black                  -0.00448901  0.157178195
-## race Other                  -0.03219864  0.150804351
-## race White                  -0.42503153 -0.207400841
-## sex Male                     0.05693568  0.185578646</code></pre>
+<pre><code>##                               Lower Bound Upper Bound
+## (Intercept)                 -1.0852623923 -0.87822397
+## education 11th               0.0790478431  0.17895607
+## education 12th              -0.0201455347  0.13686047
+## education 1st-4th           -0.0508169292  0.07208973
+## education 5th-6th           -0.0201328372  0.19636028
+## education 7th-8th           -0.0371751350  0.11694383
+## education 9th               -0.0218537231  0.50077330
+## education Assoc-acdm         0.1286148585  0.24561607
+## education Assoc-voc          0.0877044411  0.23959396
+## education Bachelors          0.3144426132  0.48130630
+## education Doctorate          0.2681827272  1.09316493
+## education HS-grad           -0.1465092811 -0.01878689
+## education Masters            0.5128028041  0.69281648
+## education Preschool         -0.1909426404  0.11681160
+## education Prof-school        0.1061581360  1.02206730
+## education Some-college       0.0186082117  0.35575857
+## relationship Not-in-family  -0.4795442070 -0.35726960
+## relationship Other-relative -0.3529127685 -0.18531341
+## relationship Own-child      -0.6565815020 -0.30154184
+## relationship Unmarried      -0.4032178287 -0.25679078
+## relationship Wife            0.1072545400  0.69703902
+## race Asian-Pac-Islander      0.0037784529  0.16122249
+## race Black                  -0.0533646116  0.14155265
+## race Other                   0.0005942268  0.11747190
+## race White                  -0.4327771261 -0.18972929
+## sex Male                     0.0287285883  0.22929009</code></pre>
 </div>
 <div id="confusion-matrix-metrics" class="section level2">
 <h2>Confusion Matrix Metrics</h2>
@@ -535,8 +535,8 @@ compute_metrics(predicted_probs = predicted_probs, y = y)</code></pre>
 ## 
 ## $Diagnostic_Odds_Ratio
 ## [1] 6.21926</code></pre>
-<p>The process to create the Confusion Matrix Metrics function is
-below:</p>
+<p>The process and steps to create the Confusion Matrix Metrics function
+are below:</p>
 <p>Next we will create a confusion based off of the results from an
 if-else statement, we assigned values for predictions based off of their
 cutoff point. This cutoff point being 0.5, where values above are
@@ -549,42 +549,30 @@ predictions&lt;- ifelse(predicted_probs&gt;0.5,1,0)
 confusion_matrix&lt;-table(Predicted=predicted_probs, Actual=y)</code></pre>
 <p>We will rename each quadrant of the confusion matrix for easier use
 when computing our metrics.</p>
-<pre class="r"><code>true_pos&lt;-confusion_matrix[1,1]
-false_pos&lt;-confusion_matrix[1,2]
-false_neg&lt;-confusion_matrix[2,1]
-true_neg&lt;-confusion_matrix[2,2]</code></pre>
+<pre class="r"><code>true_pos &lt;- confusion_matrix[2, 2]  # Predicted = 1, Actual = 1
+false_pos &lt;- confusion_matrix[2, 1]  # Predicted = 1, Actual = 0
+false_neg &lt;- confusion_matrix[1, 2]  # Predicted = 0, Actual = 1
+true_neg &lt;- confusion_matrix[1, 1]   # Predicted = 0, Actual = 0</code></pre>
 <p><strong>Prevalence</strong> This is the proportion of actual
 positives in the data set out of all observations.</p>
-<pre class="r"><code>prevalence &lt;- (true_pos+false_neg)/sum(confusion_matrix)
-print(prevalence)</code></pre>
-<pre><code>## [1] 0.01437302</code></pre>
+<pre class="r"><code>prevalence &lt;- (true_pos+false_neg)/sum(confusion_matrix)</code></pre>
 <p><strong>Accuracy</strong> This is the proportion of corrected
 predictions for both positive and negative out of all observations.</p>
-<pre class="r"><code>accuracy &lt;- (true_pos+true_neg)/sum(confusion_matrix)
-print(accuracy)</code></pre>
-<pre><code>## [1] 0.01409662</code></pre>
+<pre class="r"><code>accuracy &lt;- (true_pos+true_neg)/sum(confusion_matrix)</code></pre>
 <p><strong>Sensitivity</strong> Here we find the proportion of correctly
 predicted positive instances out of all positive instances.</p>
-<pre class="r"><code>sensitivity&lt;-true_pos/(true_pos+false_neg)
-print(sensitivity)</code></pre>
-<pre><code>## [1] 0.9807692</code></pre>
+<pre class="r"><code>sensitivity&lt;-true_pos/(true_pos+false_neg)</code></pre>
 <p><strong>Specificity</strong> Here this is the proportion of correctly
 predicted negative instances out of all negative outcomes.</p>
-<pre class="r"><code>specificity &lt;- true_neg/(true_neg+false_pos)
-print(specificity)</code></pre>
-<pre><code>## [1] 0</code></pre>
+<pre class="r"><code>specificity &lt;- true_neg/(true_neg+false_pos)</code></pre>
 <p><strong>False Discovery Rate</strong> This is the proportion of
 incorrect positive predictions out of all positive outcomes.</p>
-<pre class="r"><code>false_discovery_rate &lt;- false_pos/(true_pos+false_pos)
-print(false_discovery_rate)</code></pre>
-<pre><code>## [1] 0.008639309</code></pre>
+<pre class="r"><code>false_discovery_rate &lt;- false_pos/(true_pos+false_pos)</code></pre>
 <p><strong>Diagnostic Odds Ratio</strong> This metric summarizes the
 performances of the diagnostic test by combining the sensitivity and
 specificity metrics. High DOR indicates a good test with low false
 positives and negatives.</p>
-<pre class="r"><code>diagnostic_odds_ratio&lt;-(true_pos+true_neg)/(false_pos+false_neg)
-print(diagnostic_odds_ratio)</code></pre>
-<pre><code>## [1] 35.30769</code></pre>
+<pre class="r"><code>diagnostic_odds_ratio&lt;-(true_pos+true_neg)/(false_pos+false_neg)</code></pre>
 </div>
 </div>
 
